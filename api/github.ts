@@ -37,9 +37,10 @@ export default Queue("github", async () => {
   const notifications = await getAllNewNotifications();
 
   for (const notification of notifications) {
-    await createTask(notification.subject.type, notification.url, [
+    await createTask(notification.subject.title, notification.url, [
       "github",
       notification.repository.full_name,
+      notification.subject.type
     ]);
   }
 });
