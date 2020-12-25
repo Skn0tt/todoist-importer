@@ -1,6 +1,9 @@
 {
+  "engines": {
+    "npm": "7"
+  },
   "scripts": {
-    "build": "npx quirrel register-cron"
+    "build": "quirrel register-cron"
   },
   "dependencies": {
     "@octokit/rest": "^18.0.9",
