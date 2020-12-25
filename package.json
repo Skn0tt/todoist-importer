@@ -12,6 +12,6 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "quirrel": "^1.0.0-alpha-3"
+    "quirrel": "^1.0.0-alpha-4"
   }
 }
