@@ -1,4 +1,4 @@
-import { Queue } from "@quirrel/next";
+import { CronJob } from "quirrel/next";
 import { Octokit, RestEndpointMethodTypes } from "@octokit/rest";
 import { createTask } from "../ticktick";
 
@@ -33,14 +33,14 @@ async function getAllNewNotifications() {
   }
 }
 
-export default Queue("github", async () => {
+export default CronJob("github", "@daily", async () => {
   const notifications = await getAllNewNotifications();
 
   for (const notification of notifications) {
     await createTask(notification.subject.title, notification.url, [
       "github",
       notification.repository.full_name,
-      notification.subject.type
+      notification.subject.type,
     ]);
   }
 });

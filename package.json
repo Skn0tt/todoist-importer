@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "build": "npx quirrel register-cron"
+  },
   "dependencies": {
     "@octokit/rest": "^18.0.9",
     "@quirrel/next": "^0.10.0",
@@ -6,6 +9,6 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "quirrel": "^0.10.0"
+    "quirrel": "^1.0.0-alpha-3"
   }
 }
