@@ -1,6 +1,7 @@
 import { CronJob } from "quirrel/next";
 import { Octokit, RestEndpointMethodTypes } from "@octokit/rest";
-import { createTask } from "../ticktick";
+import { createTask } from "../todoist";
+import _ from "lodash";
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_PAT,
@@ -36,11 +37,15 @@ async function getAllNewNotifications() {
 export default CronJob("github", "@daily", async () => {
   const notifications = await getAllNewNotifications();
 
-  for (const notification of notifications) {
-    await createTask(notification.subject.title, notification.url, [
-      "github",
-      notification.repository.full_name,
-      notification.subject.type,
-    ]);
+  const uniqueNotifications = _.uniqBy(notifications, (n) => n.id);
+
+  for (const notification of uniqueNotifications) {
+    const {
+      data: { html_url },
+    } = await octokit.request({
+      url: notification.subject.url,
+    });
+
+    await createTask(notification.subject.title, html_url);
   }
 });
